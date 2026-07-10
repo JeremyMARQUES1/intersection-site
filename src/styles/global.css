@@ -1,0 +1,74 @@
+/* ─── Palette ─── */
+:root {
+  --ink: #1B1B16;
+  --paper: #F4F2EA;
+  --paper-soft: #EAE7DB;
+  --line: #D8D4C5;
+  --red: #C53D2F;
+  --red-dark: #8C2A20;
+  --green: #2F4F3E;
+  --green-light: #496B57;
+  --gold: #D9A441;
+  --text-muted: #4A4A40;
+
+  /* ─── Typographie ─── */
+  --font-display: 'Anton', sans-serif;
+  --font-body: 'Source Serif 4', serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+
+  /* ─── Espacements ─── */
+  --space-xs: 8px;
+  --space-sm: 16px;
+  --space-md: 32px;
+  --space-lg: 64px;
+  --space-xl: 96px;
+
+  /* ─── Conteneur ─── */
+  --max-width: 1080px;
+  --padding-x: 32px;
+}
+
+/* ─── Reset ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+/* ─── Focus visible (accessibilité) ─── */
+:focus-visible {
+  outline: 3px solid var(--red);
+  outline-offset: 3px;
+}
+
+/* ─── Utilitaires ─── */
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--padding-x);
+}
+.eyebrow {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 768px) {
+  :root { --padding-x: 20px; }
+}
