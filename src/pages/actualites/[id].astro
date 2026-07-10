@@ -1,0 +1,147 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+// On importe getCollection pour lister les articles et render pour le contenu Markdown
+import { getCollection, render } from 'astro:content'; 
+
+// 1. Génération des routes statiques requise par Netlify
+export async function getStaticPaths() {
+  const actualites = await getCollection('actualites');
+  
+  return actualites.map(actu => ({
+    params: { id: actu.id }, // Utilise l'id (nom du fichier .md) pour l'URL
+    props: { actu },         // Passe l'article en propriété à la page
+  }));
+}
+
+// 2. Récupération des données de l'article actuel
+const { actu } = Astro.props;
+
+// 3. Extraction du composant Content pour afficher le corps de l'article (Astro 7)
+const { Content } = await render(actu); 
+---
+
+<BaseLayout title={`${actu.data.title} — Intersection`} description={actu.data.description}>
+  <article class="wrap article-container">
+    
+    <header class="article-header">
+      <div class="article-meta">
+        <span class="eyebrow">{actu.data.tag}</span>
+        <time datetime={actu.data.date.toISOString()}>
+          {actu.data.date.toLocaleDateString('fr-FR', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric'
+          })}
+        </time>
+      </div>
+      <h1 class="article-title">{actu.data.title}</h1>
+      <p class="article-lead">{actu.data.description}</p>
+      <div class="divider"></div>
+    </header>
+
+    <div class="prose">
+      <Content /> 
+    </div>
+
+    <footer class="article-footer">
+      <a href="/actualites" class="back-link">← Retour aux actualités</a>
+    </footer>
+
+  </article>
+</BaseLayout>
+
+<style>
+  .article-container {
+    padding-top: var(--space-xl);
+    padding-bottom: var(--space-xl);
+    max-width: 760px; /* Un peu plus serré pour le confort de lecture du texte */
+  }
+
+  .article-header {
+    margin-bottom: var(--space-lg);
+  }
+
+  .article-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    margin-bottom: var(--space-sm);
+  }
+
+  .article-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: var(--space-sm);
+  }
+
+  .article-lead {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    line-height: 1.5;
+  }
+
+  .divider {
+    height: 2px;
+    background-color: var(--ink);
+    margin-top: var(--space-md);
+  }
+
+  /* Style du contenu Markdown */
+  .prose {
+    font-size: 18px;
+    line-height: 1.75;
+    color: var(--ink);
+  }
+
+  /* On cible les éléments HTML générés par le Markdown */
+  .prose :global(p) {
+    margin-bottom: var(--space-sm);
+  }
+
+  .prose :global(h2) {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    text-transform: uppercase;
+    margin-top: var(--space-lg);
+    margin-bottom: var(--space-xs);
+  }
+
+  .prose :global(h3) {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-top: var(--space-md);
+    margin-bottom: var(--space-xs);
+  }
+
+  .prose :global(ul) {
+    margin-left: var(--space-md);
+    margin-bottom: var(--space-sm);
+  }
+
+  .prose :global(li) {
+    margin-bottom: 4px;
+  }
+
+  .article-footer {
+    margin-top: var(--space-xl);
+    padding-top: var(--space-md);
+    border-top: 1px solid var(--line);
+  }
+
+  .back-link {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    text-decoration: none;
+    color: var(--red);
+    font-weight: 500;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+    color: var(--red-dark);
+  }
+</style>
