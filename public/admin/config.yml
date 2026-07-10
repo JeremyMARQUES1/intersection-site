@@ -1,0 +1,69 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images"
+public_folder: "/images"
+
+locale: fr
+
+collections:
+
+  - name: "actualites"
+    label: "Actualités"
+    label_singular: "Article"
+    folder: "src/content/actualites"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - { label: "Titre", name: "title", widget: "string" }
+      - { label: "Description courte", name: "description", widget: "string" }
+      - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
+      - label: "Catégorie"
+        name: "tag"
+        widget: "select"
+        options: ["Vote", "Action", "Communiqué", "Vie associative", "Événement"]
+      - { label: "Image (optionnel)", name: "image", widget: "image", required: false }
+      - { label: "Brouillon", name: "draft", widget: "boolean", default: false }
+      - { label: "Contenu", name: "body", widget: "markdown" }
+
+  - name: "membres"
+    label: "Membres / Équipe"
+    label_singular: "Membre"
+    folder: "src/content/membres"
+    create: true
+    slug: "{{fields.nom | slugify}}"
+    fields:
+      - { label: "Nom complet", name: "nom", widget: "string" }
+      - { label: "Rôle / Mandat", name: "role", widget: "string" }
+      - { label: "Photo", name: "photo", widget: "image", required: false }
+      - { label: "Ordre d'affichage", name: "ordre", widget: "number", default: 99 }
+      - { label: "Biographie", name: "body", widget: "markdown", required: false }
+
+  - name: "valeurs"
+    label: "Valeurs"
+    label_singular: "Valeur"
+    folder: "src/content/valeurs"
+    create: true
+    slug: "{{fields.titre | slugify}}"
+    fields:
+      - { label: "Titre", name: "titre", widget: "string" }
+      - { label: "Ordre d'affichage", name: "ordre", widget: "number", default: 99 }
+      - { label: "Description", name: "body", widget: "markdown" }
+
+  - name: "pages"
+    label: "Pages statiques"
+    files:
+      - name: "accueil"
+        label: "Accueil — textes"
+        file: "src/content/pages/accueil.json"
+        fields:
+          - { label: "Accroche (titre hero)", name: "accroche", widget: "string" }
+          - { label: "Sous-titre hero", name: "sous_titre", widget: "text" }
+          - { label: "À propos (résumé)", name: "a_propos", widget: "text" }
+      - name: "qui-sommes-nous"
+        label: "Qui sommes-nous"
+        file: "src/content/pages/qui-sommes-nous.json"
+        fields:
+          - { label: "Titre", name: "titre", widget: "string" }
+          - { label: "Contenu", name: "contenu", widget: "markdown" }

@@ -1,0 +1,171 @@
+---
+const navItems = [
+  { href: '/qui-sommes-nous', label: 'Qui sommes-nous' },
+  { href: '/valeurs', label: 'Valeurs' },
+  { href: '/membres', label: 'Membres' },
+  { href: '/actualites', label: 'Actualités' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<header>
+  <div class="wrap nav-row">
+    <a href="/" class="logo" aria-label="L'Intersection — Accueil">
+      L'<span>Intersection</span>
+    </a>
+
+    <!-- Navigation desktop -->
+    <nav aria-label="Navigation principale">
+      <ul role="list">
+        {navItems.map(item => (
+          <li>
+            <a
+              href={item.href}
+              aria-current={currentPath.startsWith(item.href) ? 'page' : undefined}
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <!-- Bouton menu mobile -->
+    <button
+      class="menu-toggle"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+      aria-label="Ouvrir le menu"
+    >
+      <span></span><span></span><span></span>
+    </button>
+
+    <a href="/adherer" class="btn">Adhérer</a>
+  </div>
+
+  <!-- Menu mobile -->
+  <nav id="mobile-menu" class="mobile-menu" aria-label="Menu mobile" hidden>
+    <ul role="list">
+      {navItems.map(item => (
+        <li><a href={item.href}>{item.label}</a></li>
+      ))}
+      <li><a href="/adherer">Adhérer</a></li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  const toggle = document.querySelector('.menu-toggle') as HTMLButtonElement;
+  const menu = document.getElementById('mobile-menu') as HTMLElement;
+
+  toggle?.addEventListener('click', () => {
+    const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+    toggle.setAttribute('aria-expanded', String(!isOpen));
+    toggle.setAttribute('aria-label', isOpen ? 'Ouvrir le menu' : 'Fermer le menu');
+    menu.hidden = isOpen;
+  });
+
+  // Fermer le menu au clic sur un lien
+  menu?.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      toggle.setAttribute('aria-expanded', 'false');
+      menu.hidden = true;
+    });
+  });
+</script>
+
+<style>
+  header {
+    border-bottom: 1px solid var(--line);
+    background: var(--paper);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+  .nav-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 0;
+    gap: 24px;
+  }
+  .logo {
+    font-family: var(--font-display);
+    font-size: 22px;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .logo span { color: var(--red); }
+
+  nav ul {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+  nav a {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+    transition: color 0.15s;
+  }
+  nav a:hover,
+  nav a[aria-current="page"] {
+    color: var(--red);
+  }
+  nav a[aria-current="page"] {
+    text-decoration: underline;
+    text-underline-offset: 4px;
+  }
+
+  .btn {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    background: var(--ink);
+    color: var(--paper);
+    padding: 11px 22px;
+    border: 1px solid var(--ink);
+    text-decoration: none;
+    transition: background 0.15s, color 0.15s;
+  }
+  .btn:hover { background: var(--paper); color: var(--ink); }
+
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 8px;
+  }
+  .menu-toggle span {
+    display: block;
+    width: 24px;
+    height: 2px;
+    background: var(--ink);
+    transition: transform 0.2s;
+  }
+
+  .mobile-menu {
+    border-top: 1px solid var(--line);
+    padding: 16px var(--padding-x) 24px;
+  }
+  .mobile-menu ul { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+  .mobile-menu a {
+    font-family: var(--font-mono);
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+    text-decoration: none;
+  }
+
+  @media (max-width: 768px) {
+    nav:not(.mobile-menu), .btn { display: none; }
+    .menu-toggle { display: flex; }
+  }
+</style>
