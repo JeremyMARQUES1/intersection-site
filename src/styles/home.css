@@ -338,6 +338,7 @@
   .home-hero {
     grid-template-columns: 1fr;
     text-align: center;
+    padding: var(--space-xl) 0;
   }
   .home-hero-lead {
     max-width: 100%;
