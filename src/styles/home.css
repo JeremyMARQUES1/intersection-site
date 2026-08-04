@@ -12,6 +12,8 @@
   align-items: center;
   gap: var(--space-lg);
   padding: var(--space-xl);
+  /* padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl); */
   border-bottom: 2px solid var(--ink);
 }
 
