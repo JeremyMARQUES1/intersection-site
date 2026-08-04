@@ -1,0 +1,46 @@
+---
+interface Props {
+  size?: number;   // taille en px, défaut 36
+  class?: string;
+}
+const { size = 36, class: className } = Astro.props;
+---
+
+<!--
+  Logo L'Intersection — 3 cercles superposés en mix-blend-mode multiply
+  Inline pour garder le blend-mode actif sur le fond réel de la page
+-->
+<span class:list={['logo-mark', className]} aria-hidden="true">
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    viewBox="0 0 1080 1080"
+    width={size}
+    height={size}
+    role="img"
+    focusable="false"
+  >
+    <style>
+      .lc-r { mix-blend-mode: multiply; fill: #e35336; }
+      .lc-g { mix-blend-mode: multiply; fill: #7ea172; }
+      .lc-y { mix-blend-mode: multiply; fill: #fcca46; }
+    </style>
+    <path class="lc-r" fill-rule="evenodd"
+      d="m392 917c-138.25 0-250-111.75-250-250 0-138.25 111.75-250
+         250-250 138.25 0 250 111.75 250 250 0 138.25-111.75 250-250 250z"/>
+    <path class="lc-g" fill-rule="evenodd"
+      d="m688 917c-138.25 0-250-111.75-250-250 0-138.25 111.75-250
+         250-250 138.25 0 250 111.75 250 250 0 138.25-111.75 250-250 250z"/>
+    <path class="lc-y" fill-rule="evenodd"
+      d="m540 663c-138.25 0-250-111.75-250-250 0-138.25 111.75-250
+         250-250 138.25 0 250 111.75 250 250 0 138.25-111.75 250-250 250z"/>
+  </svg>
+</span>
+
+<style>
+  .logo-mark {
+    display: inline-flex;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  svg { display: block; }
+</style>

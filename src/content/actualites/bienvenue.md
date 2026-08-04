@@ -1,6 +1,6 @@
 ---
 title: "Bienvenue sur le site de L'Intersection"
-description: "Première publication de notre association."
+description: "Première publication de notre mouvement."
 date: 2026-07-01
 tag: "Vie associative"
 draft: false

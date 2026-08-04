@@ -1,0 +1,12 @@
+<svg version="1.2" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1080 1080" width="1080" height="1080">
+	<style>
+		.s0 { mix-blend-mode: multiply;fill: #e35336 } 
+		.s1 { mix-blend-mode: multiply;fill: #7ea172 } 
+		.s2 { mix-blend-mode: multiply;fill: #fcca46 } 
+	</style>
+	<g id="Dossier 1">
+		<path id="Background" fill-rule="evenodd" class="s0" d="m392 917c-138.25 0-250-111.75-250-250 0-138.25 111.75-250 250-250 138.25 0 250 111.75 250 250 0 138.25-111.75 250-250 250z"/>
+		<path id="Forme 2" fill-rule="evenodd" class="s1" d="m688 917c-138.25 0-250-111.75-250-250 0-138.25 111.75-250 250-250 138.25 0 250 111.75 250 250 0 138.25-111.75 250-250 250z"/>
+		<path id="Forme 1" fill-rule="evenodd" class="s2" d="m540 663c-138.25 0-250-111.75-250-250 0-138.25 111.75-250 250-250 138.25 0 250 111.75 250 250 0 138.25-111.75 250-250 250z"/>
+	</g>
+</svg>

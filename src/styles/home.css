@@ -1,0 +1,386 @@
+/* ════════════════════════════════════════════════════════════
+   HOMEPAGE — L'Intersection
+   Toutes les classes sont préfixées "home-" (sauf les utilitaires
+   globaux .wrap / .eyebrow venant de global.css) pour ne jamais
+   entrer en conflit avec les styles des autres pages/composants.
+   ════════════════════════════════════════════════════════════ */
+
+/* ─── Hero ─── */
+.home-hero {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: var(--space-lg);
+  padding-top: var(--space-xl);
+  padding-bottom: var(--space-xl);
+  border-bottom: 2px solid var(--ink);
+}
+
+.home-hero-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.6rem, 6.4vw, 5.2rem);
+  line-height: 0.98;
+  color: var(--ink);
+  text-transform: uppercase;
+  margin: var(--space-xs) 0 var(--space-md) 0;
+  letter-spacing: -0.01em;
+}
+
+.home-hero-title em {
+  font-style: normal;
+  color: var(--red);
+}
+
+.home-hero-lead {
+  font-size: clamp(1.1rem, 1.6vw, 1.35rem);
+  max-width: 46ch;
+  color: var(--text-muted);
+  margin-bottom: var(--space-md);
+}
+
+.home-hero-actions {
+  display: flex;
+  gap: var(--space-sm);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+/* ─── Boutons ─── */
+.home-btn {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  padding: var(--space-sm) var(--space-md);
+  border: 2px solid var(--ink);
+  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease, transform 0.15s ease;
+}
+
+.home-btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+.home-btn-primary:hover {
+  background: var(--red);
+  border-color: var(--red);
+  transform: translateY(-2px);
+}
+
+.home-btn-secondary {
+  background: transparent;
+  color: var(--ink);
+}
+.home-btn-secondary:hover {
+  background: var(--paper-soft);
+  transform: translateY(-2px);
+}
+
+.home-btn-lg {
+  padding: 18px 36px;
+  font-size: 15px;
+}
+
+/* ─── Graphique héro (logo en 3 cercles) ─── */
+.home-hero-graphic {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.home-hero-venn {
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  overflow: visible;
+  animation: home-venn-spin 100s linear infinite;
+}
+
+.venn-shape {
+  mix-blend-mode: multiply;
+  transform-box: fill-box;
+  transform-origin: 50% 50%;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.venn-shape--a { fill: var(--red); }
+.venn-shape--b { fill: var(--green-light); }
+.venn-shape--c { fill: var(--gold); }
+
+.home-hero-venn:hover .venn-shape--a { transform: translate(-9%, 5%); }
+.home-hero-venn:hover .venn-shape--b { transform: translate(9%, 5%); }
+.home-hero-venn:hover .venn-shape--c { transform: translate(0, -10%); }
+
+@keyframes home-venn-spin {
+  to { transform: rotate(360deg); }
+}
+
+/* ─── En-têtes de section (réutilisé Valeurs / Actus) ─── */
+.home-section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: var(--space-lg);
+  border-bottom: 1px solid var(--line);
+  padding-bottom: var(--space-sm);
+  gap: var(--space-sm);
+}
+
+.home-section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 4vw, 3rem);
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.home-link-more {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  text-decoration: none;
+  color: var(--red);
+  font-weight: 500;
+  white-space: nowrap;
+}
+.home-link-more:hover {
+  color: var(--red-dark);
+  text-decoration: underline;
+}
+
+.home-empty-state {
+  font-family: var(--font-mono);
+  text-align: center;
+  color: var(--text-muted);
+  padding: var(--space-lg) 0;
+}
+
+/* ─── Section Valeurs ("Ce qui nous rassemble") ─── */
+.home-pillars-section {
+  padding: var(--space-xl) 0;
+}
+
+.home-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 340px));
+  justify-content: center;
+  gap: var(--space-md);
+}
+
+.home-pillar-card {
+  position: relative;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-top: 4px solid var(--ink);
+  padding: var(--space-md);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-pillar-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(27, 27, 22, 0.06);
+}
+
+.home-pillar-card--0 { border-top-color: var(--red); }
+.home-pillar-card--1 { border-top-color: var(--green-light); }
+.home-pillar-card--2 { border-top-color: var(--gold); }
+
+.home-pillar-index {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  color: var(--text-muted);
+  margin-bottom: var(--space-sm);
+}
+
+.home-pillar-card--0 .home-pillar-index { color: var(--red); }
+.home-pillar-card--1 .home-pillar-index { color: var(--green-light); }
+.home-pillar-card--2 .home-pillar-index { color: var(--gold); }
+
+.home-pillar-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+  margin-bottom: var(--space-xs);
+}
+
+.home-pillar-body {
+  color: var(--text-muted);
+  font-size: 0.98rem;
+}
+
+.home-pillar-body p {
+  margin: 0;
+}
+
+/* ─── Section Actualités ─── */
+.home-news-section {
+  background: var(--paper-soft);
+  padding: var(--space-xl) 0;
+}
+
+.home-news-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: var(--space-md);
+}
+
+.home-news-card {
+  background: var(--paper);
+  padding: var(--space-md);
+  border: 1px solid var(--line);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.home-news-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 20px rgba(27, 27, 22, 0.05);
+  border-color: var(--ink);
+}
+
+.home-card-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--space-sm);
+  font-family: var(--font-mono);
+  font-size: 12px;
+}
+
+.home-card-tag {
+  background: var(--paper-soft);
+  color: var(--green);
+  padding: 2px 8px;
+  font-weight: 500;
+  border: 1px solid var(--line);
+}
+
+.home-card-meta time {
+  color: var(--text-muted);
+}
+
+.home-card-title {
+  font-size: 1.35rem;
+  line-height: 1.3;
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  color: var(--ink);
+}
+
+.home-card-desc {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+  margin-bottom: var(--space-md);
+  flex-grow: 1;
+}
+
+.home-card-link {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--ink);
+  font-weight: 600;
+  display: inline-block;
+  border-bottom: 2px solid var(--red);
+  align-self: flex-start;
+}
+
+.home-card-link:hover {
+  color: var(--red);
+}
+
+/* ─── Bandeau d'adhésion ─── */
+.home-cta {
+  background: var(--ink);
+  color: var(--paper);
+  padding: var(--space-xl) 0;
+}
+
+.home-cta-inner {
+  text-align: center;
+  max-width: 640px;
+}
+
+.home-cta .eyebrow {
+  color: var(--gold);
+}
+
+.home-cta-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 5vw, 3.6rem);
+  text-transform: uppercase;
+  line-height: 1.05;
+  margin: var(--space-xs) 0 var(--space-sm) 0;
+}
+
+.home-cta-text {
+  color: var(--paper-soft);
+  font-size: 1.1rem;
+  margin-bottom: var(--space-md);
+}
+
+.home-cta .home-btn-primary {
+  background: var(--red);
+  border-color: var(--red);
+  color: var(--paper);
+}
+.home-cta .home-btn-primary:hover {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--ink);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 900px) {
+  .home-hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .home-hero-lead {
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .home-hero-actions {
+    justify-content: center;
+  }
+  .home-hero-graphic {
+    order: -1;
+  }
+  .home-hero-venn {
+    max-width: 260px;
+  }
+}
+
+@media (max-width: 768px) {
+  .home-hero {
+    padding-top: var(--space-lg);
+    padding-bottom: var(--space-lg);
+  }
+  .home-hero-actions {
+    flex-direction: column;
+    width: 100%;
+  }
+  .home-btn {
+    width: 100%;
+    text-align: center;
+  }
+  .home-section-head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-xs);
+  }
+}
+
+/* ─── Accessibilité : mouvement réduit ─── */
+@media (prefers-reduced-motion: reduce) {
+  .home-hero-venn {
+    animation: none;
+  }
+  .venn-shape {
+    transition: none;
+  }
+}

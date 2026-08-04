@@ -4,16 +4,21 @@
   .skip-link {
     position: absolute;
     top: -100%;
-    left: 16px;
+    left: var(--px, 20px);
+    z-index: 1000;
     background: var(--ink);
     color: var(--paper);
-    padding: 8px 16px;
+    padding: 10px 20px;
     font-family: var(--font-mono);
     font-size: 13px;
-    z-index: 100;
+    text-decoration: none;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
     transition: top 0.1s;
   }
   .skip-link:focus {
     top: 8px;
+    outline: 3px solid var(--red);
+    outline-offset: 2px;
   }
 </style>

@@ -1,6 +1,6 @@
 ---
-titre: "Démocratie directe"
+titre: "Proin nec felis orci."
 ordre: 1
 ---
 
-Chaque orientation majeure passe par un vote ouvert aux membres, jamais par décret du bureau.
+Cras sit amet quam quis augue imperdiet accumsan ac ornare mi. 

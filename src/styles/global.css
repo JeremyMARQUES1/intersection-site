@@ -1,34 +1,47 @@
-/* ─── Palette ─── */
+/* ═══════════════════════════════════════════════════════════════════════════
+   DESIGN TOKENS
+   Palette alignée sur les couleurs exactes du logo SVG
+   ═══════════════════════════════════════════════════════════════════════════ */
 :root {
-  --ink: #1B1B16;
-  --paper: #F4F2EA;
-  --paper-soft: #EAE7DB;
-  --line: #D8D4C5;
-  --red: #C53D2F;
-  --red-dark: #8C2A20;
-  --green: #2F4F3E;
-  --green-light: #496B57;
-  --gold: #D9A441;
-  --text-muted: #4A4A40;
+  /* Couleurs logo */
+  --logo-red:   #e35336;
+  --logo-green: #7ea172;
+  --logo-gold:  #fcca46;
 
-  /* ─── Typographie ─── */
+  /* Palette UI */
+  --ink:         #1c1c17;
+  --paper:       #f5f3eb;
+  --paper-soft:  #eceadf;
+  --line:        #d9d5c4;
+  --text-muted:  #4a4a3e;
+
+  --red:         #e35336;
+  --red-dark:    #b02d1d;
+  --green:       #3a5633;
+  --green-light: #7ea172;
+  --gold:        #fcca46;
+  --gold-dark:   #c49a1a;
+
+  /* Typographie */
   --font-display: 'Anton', sans-serif;
-  --font-body: 'Source Serif 4', serif;
-  --font-mono: 'IBM Plex Mono', monospace;
+  --font-body:    'Source Serif 4', serif;
+  --font-mono:    'IBM Plex Mono', monospace;
 
-  /* ─── Espacements ─── */
+  /* Espacement */
   --space-xs: 8px;
   --space-sm: 16px;
   --space-md: 32px;
   --space-lg: 64px;
   --space-xl: 96px;
 
-  /* ─── Conteneur ─── */
+  /* Conteneur */
   --max-width: 1080px;
-  --padding-x: 32px;
+  --px: 32px;
 }
 
-/* ─── Reset ─── */
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESET
+   ═══════════════════════════════════════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; }
 body {
@@ -37,29 +50,23 @@ body {
   font-family: var(--font-body);
   font-size: 17px;
   line-height: 1.65;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
 }
+main { flex: 1; }
 img { max-width: 100%; display: block; }
 a { color: inherit; }
 
-/* ─── Focus visible (accessibilité) ─── */
+/* ═══════════════════════════════════════════════════════════════════════════
+   FOCUS & ACCESSIBILITÉ
+   ═══════════════════════════════════════════════════════════════════════════ */
 :focus-visible {
   outline: 3px solid var(--red);
   outline-offset: 3px;
+  border-radius: 1px;
 }
 
-/* ─── Utilitaires ─── */
-.wrap {
-  max-width: var(--max-width);
-  margin: 0 auto;
-  padding: 0 var(--padding-x);
-}
-.eyebrow {
-  font-family: var(--font-mono);
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--red);
-}
 .sr-only {
   position: absolute;
   width: 1px; height: 1px;
@@ -68,7 +75,72 @@ a { color: inherit; }
   white-space: nowrap;
 }
 
-/* ─── Responsive ─── */
+/* ═══════════════════════════════════════════════════════════════════════════
+   UTILITAIRES
+   ═══════════════════════════════════════════════════════════════════════════ */
+.wrap {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 var(--px);
+}
+
+.eyebrow {
+  display: block;
+  font-family: var(--font-mono);
+  font-size: 11.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--red);
+}
+
+/* Jauge de consensus — motif signature */
+.gauge {
+  display: flex;
+  gap: 3px;
+  height: 7px;
+}
+.gauge span { flex: 1; }
+.gauge span:nth-child(1) { background: var(--red-dark); }
+.gauge span:nth-child(2) { background: var(--red); }
+.gauge span:nth-child(3) { background: var(--gold); }
+.gauge span:nth-child(4) { background: var(--green-light); }
+.gauge span:nth-child(5) { background: var(--green); }
+
+/* Boutons */
+.btn {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--ink);
+  color: var(--paper);
+  padding: 13px 26px;
+  border: 1.5px solid var(--ink);
+  text-decoration: none;
+  transition: background 0.15s, color 0.15s;
+  cursor: pointer;
+  line-height: 1;
+}
+.btn:hover,
+.btn:focus-visible { background: transparent; color: var(--ink); outline-color: var(--ink); }
+
+.btn-outline { background: transparent; color: var(--ink); }
+.btn-outline:hover,
+.btn-outline:focus-visible { background: var(--ink); color: var(--paper); }
+
+.btn-red { background: var(--red); border-color: var(--red); color: #fff; }
+.btn-red:hover,
+.btn-red:focus-visible { background: transparent; color: var(--red); }
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════════════════════════════════════ */
 @media (max-width: 768px) {
-  :root { --padding-x: 20px; }
+  :root { --px: 20px; font-size: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+  html { scroll-behavior: auto; }
 }
