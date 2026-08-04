@@ -11,10 +11,8 @@
   grid-template-columns: 1.15fr 0.85fr;
   align-items: center;
   gap: var(--space-lg);
-  padding: var(--space-xl);
-  /* padding-top: var(--space-xl);
-  padding-bottom: var(--space-xl); */
   border-bottom: 2px solid var(--ink);
+  padding: var(--space-xl) 0;
 }
 
 .home-hero-title {
