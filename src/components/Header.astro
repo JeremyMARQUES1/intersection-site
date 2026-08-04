@@ -135,7 +135,7 @@ const isActive = (href: string) =>
     align-items: center;
     justify-content: space-between;
     gap: 24px;
-    padding: 14px 0;
+    padding: 14px;
   }
 
   /* ── Logo ── */
@@ -173,7 +173,7 @@ const isActive = (href: string) =>
     transition: color 0.15s;
     position: relative;
   }
-  .nav-desktop a:hover { color: var(--ink); }
+  .nav-desktop a:hover { color: var(--red); }
   .nav-desktop a[aria-current="page"] {
     color: var(--ink);
     font-weight: 500;
@@ -242,8 +242,9 @@ const isActive = (href: string) =>
     border-bottom: 1px solid var(--line);
   }
   .nav-mobile a[aria-current="page"] { color: var(--red); }
-  .mobile-cta { padding-top: 16px; }
-  .mobile-cta a { border: none; }
+  .mobile-cta { padding-top: 16px; text-align: center; }
+  .mobile-cta a { border: none; color: var(--paper);}
+  .mobile-cta a:hover {background-color: var(--red);}
 
   /* ── Responsive ── */
   @media (max-width: 860px) {
