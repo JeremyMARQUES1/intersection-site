@@ -1,0 +1,22 @@
+---
+// src/pages/admin.astro
+---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Administration — L'Intersection</title>
+</head>
+<body>
+  <!-- On charge Netlify Identity avec le bypass TypeScript -->
+  <script>
+    import netlifyIdentity from "netlify-identity-widget";
+
+    (window as any).netlifyIdentity = netlifyIdentity;
+  </script>
+  
+  <!-- On charge Decap CMS -->
+  <script is:inline src="https://unpkg.com/decap-cms@^3.0.0/dist/decap-cms.js"></script>
+</body>
+</html>
