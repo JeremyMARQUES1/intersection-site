@@ -81,7 +81,7 @@ a { color: inherit; }
 .wrap {
   max-width: var(--max-width);
   margin: 0 auto;
-  padding: 0 var(--px);
+  /* padding: 0 var(--px); */
 }
 
 .eyebrow {

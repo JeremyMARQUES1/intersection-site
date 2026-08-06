@@ -1,30 +1,32 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection } from 'astro:content';
-import '../styles/home.css';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import "../styles/home.css";
 
 // ─── Actualités : les 3 dernières publiées, triées par date décroissante ───
-const dernieresActus = (await getCollection('actualites', ({ data }) => !data.draft))
+const dernieresActus = (
+  await getCollection("actualites", ({ data }) => !data.draft)
+)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 3);
 
 // ─── Couleurs des tags ────────────────────────────────────────────────────────
 // Chaque tag a une paire [couleur texte, couleur fond]
 const tagColors: Record<string, [string, string]> = {
-  'Environnement':   ['#2d6a4f', '#d4edda'],
-  'Économie':        ['#7a5000', '#fef3c7'],
-  'Social':          ['#9b2335', '#fde8e8'],
-  'Vote':            ['#5b21b6', '#ede9fe'],
-  'Action':          ['#1c1c17', '#e5e5df'],
-  'Communiqué':      ['#0e6272', '#d0f0f5'],
-  'Vie associative': ['#9a3412', '#ffedd5'],
-  'Événement':       ['#1e3a8a', '#dbeafe'],
+  Environnement: ["#2d6a4f", "#d4edda"],
+  Économie: ["#7a5000", "#fef3c7"],
+  Social: ["#9b2335", "#fde8e8"],
+  Vote: ["#5b21b6", "#ede9fe"],
+  Action: ["#1c1c17", "#e5e5df"],
+  Communiqué: ["#0e6272", "#d0f0f5"],
+  "Vie associative": ["#9a3412", "#ffedd5"],
+  Événement: ["#1e3a8a", "#dbeafe"],
 };
 
 // ─── Valeurs : les 3 premières par ordre d'affichage ───────────────────────
 // On utilise data.resume (champ court) → pas besoin de render() ici,
 // ce qui allège le build et évite des Promise.all inutiles.
-const valeurs = (await getCollection('valeurs'))
+const valeurs = (await getCollection("valeurs"))
   .sort((a, b) => a.data.ordre - b.data.ordre)
   .slice(0, 3);
 ---
@@ -38,13 +40,20 @@ const valeurs = (await getCollection('valeurs'))
     <div class="wrap">
       <div class="home-hero-text">
         <span class="eyebrow">Lorem ipsum dolor sit amet</span>
-        <h1 class="home-hero-title">Nunc non diam.<br />dui at <em>risus</em>.</h1>
+        <h1 class="home-hero-title">
+          Nunc non diam.<br />dui at <em>risus</em>.
+        </h1>
         <p class="home-hero-lead">
-          Etiam finibus nisi id aliquam ullamcorper. Quisque bibendum in felis pellentesque pulvinar.
+          Etiam finibus nisi id aliquam ullamcorper. Quisque bibendum in felis
+          pellentesque pulvinar.
         </p>
         <div class="home-hero-actions">
-          <a href="/qui-sommes-nous" class="home-btn home-btn-primary">Qui sommes-nous ?</a>
-          <a href="/adherer" class="home-btn home-btn-secondary">Nous rejoindre</a>
+          <a href="/qui-sommes-nous" class="home-btn home-btn-primary"
+            >Qui sommes-nous ?</a
+          >
+          <a href="/adherer" class="home-btn home-btn-secondary"
+            >Nous rejoindre</a
+          >
         </div>
       </div>
     </div>
@@ -57,12 +66,18 @@ const valeurs = (await getCollection('valeurs'))
         aria-hidden="true"
         focusable="false"
       >
-        <path class="venn-shape venn-shape--a"
-          d="m392 917c-138.25 0-250-111.75-250-250 0-138.25 111.75-250 250-250 138.25 0 250 111.75 250 250 0 138.25-111.75 250-250 250z"/>
-        <path class="venn-shape venn-shape--b"
-          d="m688 917c-138.25 0-250-111.75-250-250 0-138.25 111.75-250 250-250 138.25 0 250 111.75 250 250 0 138.25-111.75 250-250 250z"/>
-        <path class="venn-shape venn-shape--c"
-          d="m540 663c-138.25 0-250-111.75-250-250 0-138.25 111.75-250 250-250 138.25 0 250 111.75 250 250 0 138.25-111.75 250-250 250z"/>
+        <path
+          class="venn-shape venn-shape--a"
+          d="m392 917c-138.25 0-250-111.75-250-250 0-138.25 111.75-250 250-250 138.25 0 250 111.75 250 250 0 138.25-111.75 250-250 250z"
+        ></path>
+        <path
+          class="venn-shape venn-shape--b"
+          d="m688 917c-138.25 0-250-111.75-250-250 0-138.25 111.75-250 250-250 138.25 0 250 111.75 250 250 0 138.25-111.75 250-250 250z"
+        ></path>
+        <path
+          class="venn-shape venn-shape--c"
+          d="m540 663c-138.25 0-250-111.75-250-250 0-138.25 111.75-250 250-250 138.25 0 250 111.75 250 250 0 138.25-111.75 250-250 250z"
+        ></path>
       </svg>
     </div>
   </section>
@@ -75,32 +90,46 @@ const valeurs = (await getCollection('valeurs'))
         <a href="/valeurs" class="home-link-more">Voir toutes nos valeurs →</a>
       </div>
 
-      {valeurs.length === 0 ? (
-        <p class="home-empty-state">Nos valeurs seront bientôt détaillées ici.</p>
-      ) : (
-        <div class="home-pillars-grid">
-          {valeurs.map((valeur, i) => (
-            <article class={`home-pillar-card home-pillar-card--${i % 3}`}>
-              {/* Icône optionnelle définie dans le CMS */}
-              {valeur.data.icone && (
-                <img
-                  src={valeur.data.icone}
-                  alt=""
-                  class="home-pillar-icon"
-                  aria-hidden="true"
-                  width="40"
-                  height="40"
-                  loading="lazy"
-                />
-              )}
-              <span class="home-pillar-index">{String(i + 1).padStart(2, '0')}</span>
-              <h3 class="home-pillar-title">{valeur.data.titre}</h3>
-              {/* resume = texte court, pas besoin de render() */}
-              <p class="home-pillar-body">{valeur.data.resume}</p>
-            </article>
-          ))}
-        </div>
-      )}
+      {
+        valeurs.length === 0 ? (
+          <p class="home-empty-state">
+            Nos valeurs seront bientôt détaillées ici.
+          </p>
+        ) : (
+          <div class="home-pillars-grid">
+            {valeurs.map((valeur, i) => (
+              <article class={`home-pillar-card home-pillar-card--${i % 3}`}>
+                <div class="home-pillar-image-wrap">
+                  {valeur.data.icone ? (
+                    <img
+                      src={valeur.data.icone}
+                      alt=""
+                      class="home-pillar-image"
+                      aria-hidden="true"
+                      width="400"
+                      height="225"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                  ) : (
+                    <div
+                      class="home-pillar-image-placeholder"
+                      aria-hidden="true"
+                    />
+                  )}
+                </div>
+                <div class="home-pillar-content">
+                  <span class="home-pillar-index">
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  <h3 class="home-pillar-title">{valeur.data.titre}</h3>
+                  <p class="home-pillar-body">{valeur.data.resume}</p>
+                </div>
+              </article>
+            ))}
+          </div>
+        )
+      }
     </div>
   </section>
 
@@ -109,68 +138,86 @@ const valeurs = (await getCollection('valeurs'))
     <div class="wrap">
       <div class="home-section-head">
         <h2 class="home-section-title">Nos Actus</h2>
-        <a href="/actualites" class="home-link-more">Voir toutes les actualités →</a>
+        <a href="/actualites" class="home-link-more"
+          >Voir toutes les actualités →</a
+        >
       </div>
 
-      {dernieresActus.length === 0 ? (
-        <p class="home-empty-state">Aucun article publié pour le moment. Repassez bientôt !</p>
-      ) : (
-        <div class="home-news-grid">
-          {dernieresActus.map((actu) => {
-            const [tagColor, tagBg] = tagColors[actu.data.tag] ?? ['#1c1c17', '#e5e5df'];
-            return (
-              <article class="home-news-card">
-                <a href={`/actualites/${actu.id}`} class="home-news-card-link" aria-label={`Lire l'article : ${actu.data.title}`}>
-
-                  {/* Image de couverture */}
-                  <div class="home-card-image-wrap">
-                    {actu.data.image ? (
-                      <img
-                        src={actu.data.image}
-                        alt=""
-                        class="home-card-image"
-                        aria-hidden="true"
-                        width="400"
-                        height="225"
-                        loading="lazy"
-                        decoding="async"
-                      />
-                    ) : (
-                      <div class="home-card-image-placeholder" aria-hidden="true" />
-                    )}
-                  </div>
-
-                  <div class="home-card-body">
-                    {/* Tag coloré + date */}
-                    <div class="home-card-meta">
-                      <span
-                        class="home-card-tag"
-                        style={`color: ${tagColor}; background: ${tagBg};`}
-                      >
-                        {actu.data.tag}
-                      </span>
-                      <time datetime={actu.data.date.toISOString()} class="home-card-date">
-                        {actu.data.date.toLocaleDateString('fr-FR', {
-                          day: 'numeric',
-                          month: 'short',
-                          year: 'numeric',
-                        })}
-                      </time>
+      {
+        dernieresActus.length === 0 ? (
+          <p class="home-empty-state">
+            Aucun article publié pour le moment. Repassez bientôt !
+          </p>
+        ) : (
+          <div class="home-news-grid">
+            {dernieresActus.map((actu) => {
+              const [tagColor, tagBg] = tagColors[actu.data.tag] ?? [
+                "#1c1c17",
+                "#e5e5df",
+              ];
+              return (
+                <article class="home-news-card">
+                  <a
+                    href={`/actualites/${actu.id}`}
+                    class="home-news-card-link"
+                    aria-label={`Lire l'article : ${actu.data.title}`}
+                  >
+                    {/* Image de couverture */}
+                    <div class="home-card-image-wrap">
+                      {actu.data.image ? (
+                        <img
+                          src={actu.data.image}
+                          alt=""
+                          class="home-card-image"
+                          aria-hidden="true"
+                          width="400"
+                          height="225"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                      ) : (
+                        <div
+                          class="home-card-image-placeholder"
+                          aria-hidden="true"
+                        />
+                      )}
                     </div>
 
-                    <h3 class="home-card-title">{actu.data.title}</h3>
-                    <p class="home-card-desc">{actu.data.description}</p>
+                    <div class="home-card-body">
+                      {/* Tag coloré + date */}
+                      <div class="home-card-meta">
+                        <span
+                          class="home-card-tag"
+                          style={`color: ${tagColor}; background: ${tagBg};`}
+                        >
+                          {actu.data.tag}
+                        </span>
+                        <time
+                          datetime={actu.data.date.toISOString()}
+                          class="home-card-date"
+                        >
+                          {actu.data.date.toLocaleDateString("fr-FR", {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          })}
+                        </time>
+                      </div>
 
-                    <span class="home-card-cta" aria-hidden="true">
-                      Lire l'article →
-                    </span>
-                  </div>
-                </a>
-              </article>
-            );
-          })}
-        </div>
-      )}
+                      <h3 class="home-card-title">{actu.data.title}</h3>
+                      <p class="home-card-desc">{actu.data.description}</p>
+
+                      <span class="home-card-cta" aria-hidden="true">
+                        Lire l'article →
+                      </span>
+                    </div>
+                  </a>
+                </article>
+              );
+            })}
+          </div>
+        )
+      }
     </div>
   </section>
 
@@ -180,10 +227,12 @@ const valeurs = (await getCollection('valeurs'))
       <span class="eyebrow">Rejoignez le mouvement</span>
       <h2 class="home-cta-title">Maecenas ligula enim.</h2>
       <p class="home-cta-text">
-        Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer sodales
-        maximus nibh, nec gravida libero varius at.
+        Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer
+        sodales maximus nibh, nec gravida libero varius at.
       </p>
-      <a href="/adherer" class="home-btn home-btn-primary home-btn-lg">Devenir adhérent·e</a>
+      <a href="/adherer" class="home-btn home-btn-primary home-btn-lg"
+        >Devenir adhérent·e</a
+      >
     </div>
   </section>
 </BaseLayout>

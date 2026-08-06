@@ -159,52 +159,99 @@
 
 .home-pillars-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 340px));
-  justify-content: center;
-  gap: var(--space-md);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
 }
 
 .home-pillar-card {
-  position: relative;
-  background: var(--paper);
   border: 1px solid var(--line);
   border-top: 4px solid var(--ink);
-  padding: var(--space-md);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  background: var(--paper);
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease;
 }
 
 .home-pillar-card:hover {
-  transform: translateY(-4px);
-  box-shadow: 0 10px 20px rgba(27, 27, 22, 0.06);
+  border-color: var(--ink);
+  box-shadow: 4px 4px 0 var(--ink);
 }
+
+.home-pillar-image-wrap {
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--paper-soft);
+  flex-shrink: 0;
+}
+
+.home-pillar-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  padding: var(--space-md);
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.home-pillar-card:hover .home-pillar-image {
+  transform: scale(1.03);
+}
+
+.home-pillar-image-placeholder {
+  width: 100%;
+  height: 100%;
+  background:
+    radial-gradient(circle at 30% 50%, color-mix(in srgb, var(--pillar-accent, var(--ink)) 55%, transparent) 0%, transparent 45%),
+    radial-gradient(circle at 62% 42%, color-mix(in srgb, var(--pillar-accent, var(--ink)) 55%, transparent) 0%, transparent 45%),
+    radial-gradient(circle at 46% 65%, color-mix(in srgb, var(--pillar-accent, var(--ink)) 55%, transparent) 0%, transparent 45%),
+    var(--paper-soft);
+}
+
+.home-pillar-card--0 .home-pillar-image-placeholder { --pillar-accent: var(--red); }
+.home-pillar-card--1 .home-pillar-image-placeholder { --pillar-accent: var(--green-light); }
+.home-pillar-card--2 .home-pillar-image-placeholder { --pillar-accent: var(--gold); }
 
 .home-pillar-card--0 { border-top-color: var(--red); }
 .home-pillar-card--1 { border-top-color: var(--green-light); }
 .home-pillar-card--2 { border-top-color: var(--gold); }
 
 .home-pillar-index {
-  display: block;
   font-family: var(--font-mono);
-  font-size: 12px;
+  font-size: 11px;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
   color: var(--text-muted);
-  margin-bottom: var(--space-sm);
 }
 
 .home-pillar-card--0 .home-pillar-index { color: var(--red); }
 .home-pillar-card--1 .home-pillar-index { color: var(--green-light); }
 .home-pillar-card--2 .home-pillar-index { color: var(--gold); }
 
+.home-pillar-content {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 20px;
+  gap: 10px;
+}
+
 .home-pillar-title {
-  font-size: 1.3rem;
-  font-weight: 600;
-  line-height: 1.25;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  font-weight: 400;
+  text-transform: uppercase;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
   color: var(--ink);
-  margin-bottom: var(--space-xs);
 }
 
 .home-pillar-body {
+  font-size: 14px;
   color: var(--text-muted);
-  font-size: 0.98rem;
+  line-height: 1.55;
+  margin: 0;
+  flex: 1;
 }
 
 .home-pillar-body p {
@@ -410,6 +457,9 @@
   .home-news-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .home-pillars-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
 }
 
 @media (max-width: 768px) {
@@ -431,6 +481,9 @@
     gap: var(--space-xs);
   }
   .home-news-grid {
+    grid-template-columns: 1fr;
+  }
+  .home-pillars-grid {
     grid-template-columns: 1fr;
   }
 }
