@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../layouts/BaseLayout.astro";
 import { getCollection } from "astro:content";
+import { tagColors } from "../lib/tagColors";
 import "../styles/home.css";
 
 // ─── Actualités : les 3 dernières publiées, triées par date décroissante ───
@@ -9,19 +10,6 @@ const dernieresActus = (
 )
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 3);
-
-// ─── Couleurs des tags ────────────────────────────────────────────────────────
-// Chaque tag a une paire [couleur texte, couleur fond]
-const tagColors: Record<string, [string, string]> = {
-  Environnement: ["#2d6a4f", "#d4edda"],
-  Économie: ["#7a5000", "#fef3c7"],
-  Social: ["#9b2335", "#fde8e8"],
-  Vote: ["#5b21b6", "#ede9fe"],
-  Action: ["#1c1c17", "#e5e5df"],
-  Communiqué: ["#0e6272", "#d0f0f5"],
-  "Vie associative": ["#9a3412", "#ffedd5"],
-  Événement: ["#1e3a8a", "#dbeafe"],
-};
 
 // ─── Valeurs : les 3 premières par ordre d'affichage ───────────────────────
 // On utilise data.resume (champ court) → pas besoin de render() ici,

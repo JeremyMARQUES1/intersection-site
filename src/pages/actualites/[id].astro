@@ -1,6 +1,7 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { getCollection, render } from 'astro:content';
+import { getTagColor } from '../../lib/tagColors';
 
 // ─── Génération des routes statiques ──────────────────────────────────────
 export async function getStaticPaths() {
@@ -14,6 +15,7 @@ export async function getStaticPaths() {
 // ─── Données de l'article ─────────────────────────────────────────────────
 const { actu } = Astro.props;
 const { Content } = await render(actu);
+const [tagColor, tagBg] = getTagColor(actu.data.tag);
 
 // ─── Conversion URL YouTube → URL d'embed ─────────────────────────────────
 // Accepte : youtube.com/watch?v=ID  |  youtu.be/ID  |  youtube.com/embed/ID
@@ -50,7 +52,12 @@ const embedUrl = actu.data.video_youtube
 
     <header class="article-header">
       <div class="article-meta">
-        <span class="eyebrow">{actu.data.tag}</span>
+        <span
+          class="article-tag"
+          style={`color: ${tagColor}; background: ${tagBg};`}
+        >
+          {actu.data.tag}
+        </span>
         <time datetime={actu.data.date.toISOString()}>
           {actu.data.date.toLocaleDateString('fr-FR', {
             day: 'numeric',
@@ -121,6 +128,22 @@ const embedUrl = actu.data.video_youtube
     font-family: var(--font-mono);
     font-size: 14px;
     margin-bottom: var(--space-sm);
+  }
+
+  .article-tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 2px;
+    white-space: nowrap;
+    /* couleur et fond injectés en inline style depuis Astro, via lib/tagColors */
+  }
+
+  .article-meta time {
+    color: var(--text-muted);
   }
 
   .article-title {
