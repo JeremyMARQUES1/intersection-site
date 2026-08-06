@@ -1,6 +1,6 @@
 ---
 titre: Valeur test
-icone: /images/screenshot_26_02_04_01_03_13.jpg
+icone: /images/pngegg.png
 resume: Résumé court test Résumé court test Résumé court test Résumé court
   testRésumé court testRésumé court test Résumé court test Résumé court test
   Résumé court test Résumé court test Résumé court test Résumé court testRésumé
