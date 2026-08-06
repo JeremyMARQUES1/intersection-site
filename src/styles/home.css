@@ -152,20 +152,24 @@
   padding: var(--space-lg) 0;
 }
 
-/* ─── Section Valeurs ("Ce qui nous rassemble") ─── */
+/* ─── Section Valeurs ("Ce qui nous rassemble") ───────────────────────────
+   --pillar-accent centralise la couleur de chaque carte (rouge / vert / or)
+   et est réutilisée partout : bordure, ombre au survol, index, placeholder.
+   ─────────────────────────────────────────────────────────────────────── */
 .home-pillars-section {
   padding: var(--space-xl) 0;
 }
 
 .home-pillars-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: 24px;
 }
 
 .home-pillar-card {
+  --pillar-accent: var(--ink);
   border: 1px solid var(--line);
-  border-top: 4px solid var(--ink);
+  border-top: 4px solid var(--pillar-accent);
   background: var(--paper);
   display: flex;
   flex-direction: column;
@@ -173,9 +177,13 @@
 }
 
 .home-pillar-card:hover {
-  border-color: var(--ink);
-  box-shadow: 4px 4px 0 var(--ink);
+  border-color: var(--pillar-accent);
+  box-shadow: 4px 4px 0 var(--pillar-accent);
 }
+
+.home-pillar-card--0 { --pillar-accent: var(--red); }
+.home-pillar-card--1 { --pillar-accent: var(--green-light); }
+.home-pillar-card--2 { --pillar-accent: var(--gold); }
 
 .home-pillar-image-wrap {
   aspect-ratio: 16 / 9;
@@ -188,7 +196,6 @@
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: var(--space-md);
   display: block;
   transition: transform 0.3s ease;
 }
@@ -201,19 +208,11 @@
   width: 100%;
   height: 100%;
   background:
-    radial-gradient(circle at 30% 50%, color-mix(in srgb, var(--pillar-accent, var(--ink)) 55%, transparent) 0%, transparent 45%),
-    radial-gradient(circle at 62% 42%, color-mix(in srgb, var(--pillar-accent, var(--ink)) 55%, transparent) 0%, transparent 45%),
-    radial-gradient(circle at 46% 65%, color-mix(in srgb, var(--pillar-accent, var(--ink)) 55%, transparent) 0%, transparent 45%),
+    radial-gradient(circle at 30% 50%, color-mix(in srgb, var(--pillar-accent) 55%, transparent) 0%, transparent 45%),
+    radial-gradient(circle at 62% 42%, color-mix(in srgb, var(--pillar-accent) 55%, transparent) 0%, transparent 45%),
+    radial-gradient(circle at 46% 65%, color-mix(in srgb, var(--pillar-accent) 55%, transparent) 0%, transparent 45%),
     var(--paper-soft);
 }
-
-.home-pillar-card--0 .home-pillar-image-placeholder { --pillar-accent: var(--red); }
-.home-pillar-card--1 .home-pillar-image-placeholder { --pillar-accent: var(--green-light); }
-.home-pillar-card--2 .home-pillar-image-placeholder { --pillar-accent: var(--gold); }
-
-.home-pillar-card--0 { border-top-color: var(--red); }
-.home-pillar-card--1 { border-top-color: var(--green-light); }
-.home-pillar-card--2 { border-top-color: var(--gold); }
 
 .home-pillar-index {
   font-family: var(--font-mono);
@@ -221,12 +220,8 @@
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.06em;
-  color: var(--text-muted);
+  color: var(--pillar-accent);
 }
-
-.home-pillar-card--0 .home-pillar-index { color: var(--red); }
-.home-pillar-card--1 .home-pillar-index { color: var(--green-light); }
-.home-pillar-card--2 .home-pillar-index { color: var(--gold); }
 
 .home-pillar-content {
   display: flex;
