@@ -41,14 +41,24 @@ const props = Astro.props;
     </main>
     <Footer />
 
-    <!-- Gestion de Netlify Identity via NPM -->
     <script>
       import netlifyIdentity from "netlify-identity-widget";
 
-      // On outrepasse le conflit de type de Window avec 'as any'
-      (window as any).netlifyIdentity = netlifyIdentity;
+      // ─── Redirect des tokens Netlify Identity ─────────────────────────────
+      // Les liens d'invitation, de récupération de mot de passe et de
+      // confirmation atterrissent sur la homepage avec un hash.
+      // On redirige immédiatement vers /admin/ qui sait les traiter.
+      const hash = window.location.hash;
+      if (
+        hash &&
+        (hash.includes("invite_token") ||
+          hash.includes("recovery_token") ||
+          hash.includes("confirmation_token"))
+      ) {
+        window.location.replace("/admin/" + hash);
+      }
 
-      // Initialisation du widget
+      // ─── Initialisation du widget ─────────────────────────────────────────
       netlifyIdentity.init();
 
       netlifyIdentity.on("init", (user) => {

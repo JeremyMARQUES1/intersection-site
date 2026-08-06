@@ -9,6 +9,9 @@ locale: fr
 
 collections:
 
+  # ---------------------------------
+  # ACTUALITÉS
+  # ---------------------------------
   - name: "actualites"
     label: "Actualités"
     label_singular: "Article"
@@ -17,16 +20,20 @@ collections:
     slug: "{{slug}}"
     fields:
       - { label: "Titre", name: "title", widget: "string" }
-      - { label: "Description courte", name: "description", widget: "string" }
+      - { label: "Description courte", name: "description", widget: "text", hint: "Apparaît dans les cartes d'aperçu et pour le SEO/Réseaux sociaux." }
       - { label: "Date", name: "date", widget: "datetime", format: "YYYY-MM-DD", date_format: "DD/MM/YYYY", time_format: false }
-      - label: "Catégorie"
+      - label: "Thématique (Tag)"
         name: "tag"
         widget: "select"
-        options: ["Vote", "Action", "Communiqué", "Vie associative", "Événement"]
-      - { label: "Image (optionnel)", name: "image", widget: "image", required: false }
+        options: ["Environnement", "Économie", "Social", "Vote", "Action", "Communiqué", "Vie associative", "Événement"]
+      - { label: "Image de couverture (optionnel)", name: "image", widget: "image", required: false }
+      - { label: "Lien vidéo YouTube (optionnel)", name: "video_youtube", widget: "string", required: false, hint: "Collez l'URL complète (ex: https://www.youtube.com/watch?v=...)" }
       - { label: "Brouillon", name: "draft", widget: "boolean", default: false }
       - { label: "Contenu", name: "body", widget: "markdown" }
 
+  # ---------------------------------
+  # MEMBRES / ÉQUIPE
+  # ---------------------------------
   - name: "membres"
     label: "Membres / Équipe"
     label_singular: "Membre"
@@ -37,9 +44,16 @@ collections:
       - { label: "Nom complet", name: "nom", widget: "string" }
       - { label: "Rôle / Mandat", name: "role", widget: "string" }
       - { label: "Photo", name: "photo", widget: "image", required: false }
-      - { label: "Ordre d'affichage", name: "ordre", widget: "number", default: 99 }
+      - { label: "Ordre d'affichage", name: "ordre", widget: "number", default: 99, hint: "1 apparaîtra en premier." }
+      # Ajout des réseaux sociaux (très important en politique)
+      - { label: "Lien Twitter / X", name: "twitter", widget: "string", required: false }
+      - { label: "Lien LinkedIn", name: "linkedin", widget: "string", required: false }
+      - { label: "Lien Instagram", name: "instagram", widget: "string", required: false }
       - { label: "Biographie", name: "body", widget: "markdown", required: false }
 
+  # ---------------------------------
+  # VALEURS
+  # ---------------------------------
   - name: "valeurs"
     label: "Valeurs"
     label_singular: "Valeur"
@@ -48,22 +62,43 @@ collections:
     slug: "{{fields.titre | slugify}}"
     fields:
       - { label: "Titre", name: "titre", widget: "string" }
+      - { label: "Icône", name: "icone", widget: "image", required: false, hint: "Format SVG recommandé pour l'illustration." }
+      - { label: "Résumé court", name: "resume", widget: "text", hint: "Texte court de 2-3 lignes affiché sur la page d'accueil." }
       - { label: "Ordre d'affichage", name: "ordre", widget: "number", default: 99 }
-      - { label: "Description", name: "body", widget: "markdown" }
+      - { label: "Description détaillée", name: "body", widget: "markdown" }
 
+  # ---------------------------------
+  # PAGES STATIQUES
+  # ---------------------------------
   - name: "pages"
     label: "Pages statiques"
     files:
+      # PAGE ACCUEIL
       - name: "accueil"
-        label: "Accueil — textes"
+        label: "Accueil"
         file: "src/content/pages/accueil.json"
         fields:
           - { label: "Accroche (titre hero)", name: "accroche", widget: "string" }
           - { label: "Sous-titre hero", name: "sous_titre", widget: "text" }
-          - { label: "À propos (résumé)", name: "a_propos", widget: "text" }
+          - { label: "Image / Vidéo de fond Hero", name: "media_hero", widget: "image", required: false }
+          - { label: "Bouton d'action - Texte", name: "cta_texte", widget: "string", default: "Rejoindre le mouvement" }
+          - { label: "Bouton d'action - Lien", name: "cta_lien", widget: "string", default: "/adherer" }
+          - { label: "À propos (résumé)", name: "a_propos", widget: "markdown" }
+
+      # PAGE QUI SOMMES NOUS
       - name: "qui-sommes-nous"
-        label: "Qui sommes-nous"
+        label: "Qui sommes-nous ?"
         file: "src/content/pages/qui-sommes-nous.json"
         fields:
-          - { label: "Titre", name: "titre", widget: "string" }
-          - { label: "Contenu", name: "contenu", widget: "markdown" }
+          - { label: "Titre de la page", name: "titre", widget: "string" }
+          - { label: "Image d'en-tête", name: "image_header", widget: "image", required: false }
+          - { label: "Notre Histoire / Manifeste", name: "contenu", widget: "markdown" }
+
+      # PAGE ADHÉRER (Nouvelle)
+      - name: "adherer"
+        label: "Adhérer"
+        file: "src/content/pages/adherer.json"
+        fields:
+          - { label: "Titre", name: "titre", widget: "string", default: "Soutenez notre action" }
+          - { label: "Texte d'explication", name: "description", widget: "markdown", hint: "Expliquez pourquoi adhérer, l'importance des dons, etc." }
+          - { label: "Lien vers la plateforme (ex: HelloAsso, Stripe)", name: "lien_paiement", widget: "string" }

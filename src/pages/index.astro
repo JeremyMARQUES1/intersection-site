@@ -1,43 +1,51 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { getCollection, render } from 'astro:content';
-import '../styles/home.css';
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getCollection } from "astro:content";
+import "../styles/home.css";
 
-// ─── Actualités : les 3 dernières, triées par date décroissante ───
-const toutesLesActus = await getCollection('actualites');
-const dernieresActus = toutesLesActus
+// ─── Actualités : les 3 dernières publiées, triées par date décroissante ───
+const dernieresActus = (
+  await getCollection("actualites", ({ data }) => !data.draft)
+)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .slice(0, 3);
 
-// ─── Valeurs : les 3 premières, triées par ordre, avec leur contenu rendu ───
-const toutesLesValeurs = await getCollection('valeurs');
-const valeursTriees = toutesLesValeurs
+// ─── Valeurs : les 3 premières par ordre d'affichage ───────────────────────
+// On utilise data.resume (champ court) → pas besoin de render() ici,
+// ce qui allège le build et évite des Promise.all inutiles.
+const valeurs = (await getCollection("valeurs"))
   .sort((a, b) => a.data.ordre - b.data.ordre)
   .slice(0, 3);
-const valeurs = await Promise.all(
-  valeursTriees.map(async (valeur) => {
-    const { Content } = await render(valeur);
-    return { ...valeur, Content };
-  })
+console.log("valeurs count:", valeurs.length);
+console.log(
+  "valeurs:",
+  valeurs.map((v) => v.id),
 );
 ---
 
 <BaseLayout
   title="Accueil"
-  description="L'Intersection."
+  description="L'Intersection — association politique de gauche engagée pour la démocratie directe, la justice sociale et l'écologie populaire."
 >
   <!-- ─── Hero ─── -->
   <section class="home-hero">
     <div class="wrap">
       <div class="home-hero-text">
         <span class="eyebrow">Lorem ipsum dolor sit amet</span>
-        <h1 class="home-hero-title">Nunc non diam.<br />dui at <em>risus</em>.</h1>
+        <h1 class="home-hero-title">
+          Nunc non diam.<br />dui at <em>risus</em>.
+        </h1>
         <p class="home-hero-lead">
-          Etiam finibus nisi id aliquam ullamcorper. Quisque bibendum in felis pellentesque pulvinar.
+          Etiam finibus nisi id aliquam ullamcorper. Quisque bibendum in felis
+          pellentesque pulvinar.
         </p>
         <div class="home-hero-actions">
-          <a href="/qui-sommes-nous" class="home-btn home-btn-primary">Qui sommes-nous ?</a>
-          <a href="/adherer" class="home-btn home-btn-secondary">Nous rejoindre</a>
+          <a href="/qui-sommes-nous" class="home-btn home-btn-primary"
+            >Qui sommes-nous ?</a
+          >
+          <a href="/adherer" class="home-btn home-btn-secondary"
+            >Nous rejoindre</a
+          >
         </div>
       </div>
     </div>
@@ -53,20 +61,20 @@ const valeurs = await Promise.all(
         <path
           class="venn-shape venn-shape--a"
           d="m392 917c-138.25 0-250-111.75-250-250 0-138.25 111.75-250 250-250 138.25 0 250 111.75 250 250 0 138.25-111.75 250-250 250z"
-        />
+        ></path>
         <path
           class="venn-shape venn-shape--b"
           d="m688 917c-138.25 0-250-111.75-250-250 0-138.25 111.75-250 250-250 138.25 0 250 111.75 250 250 0 138.25-111.75 250-250 250z"
-        />
+        ></path>
         <path
           class="venn-shape venn-shape--c"
           d="m540 663c-138.25 0-250-111.75-250-250 0-138.25 111.75-250 250-250 138.25 0 250 111.75 250 250 0 138.25-111.75 250-250 250z"
-        />
+        ></path>
       </svg>
     </div>
   </section>
 
-  <!-- ─── Ce qui nous rassemble (Valeurs) ─── -->
+  <!-- ─── Valeurs ─── -->
   <section class="home-pillars-section">
     <div class="wrap">
       <div class="home-section-head">
@@ -74,60 +82,96 @@ const valeurs = await Promise.all(
         <a href="/valeurs" class="home-link-more">Voir toutes nos valeurs →</a>
       </div>
 
-      {valeurs.length === 0 ? (
-        <p class="home-empty-state">Nos valeurs seront bientôt détaillées ici.</p>
-      ) : (
-        <div class="home-pillars-grid">
-          {valeurs.map((valeur, i) => {
-            const ValeurContent = valeur.Content;
-            return (
+      {
+        valeurs.length === 0 ? (
+          <p class="home-empty-state">
+            Nos valeurs seront bientôt détaillées ici.
+          </p>
+        ) : (
+          <div class="home-pillars-grid">
+            {valeurs.map((valeur, i) => (
               <article class={`home-pillar-card home-pillar-card--${i % 3}`}>
-                <span class="home-pillar-index">{String(i + 1).padStart(2, '0')}</span>
+                {/* Icône optionnelle définie dans le CMS */}
+                {valeur.data.icone && (
+                  <img
+                    src={valeur.data.icone}
+                    alt=""
+                    class="home-pillar-icon"
+                    aria-hidden="true"
+                    width="40"
+                    height="40"
+                    loading="lazy"
+                  />
+                )}
+                <span class="home-pillar-index">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
                 <h3 class="home-pillar-title">{valeur.data.titre}</h3>
-                <div class="home-pillar-body">
-                  <ValeurContent />
-                </div>
+                {/* resume = texte court, pas besoin de render() */}
+                <p class="home-pillar-body">{valeur.data.resume}</p>
               </article>
-            );
-          })}
-        </div>
-      )}
+            ))}
+          </div>
+        )
+      }
     </div>
   </section>
 
-  <!-- ─── Les Actus ─── -->
+  <!-- ─── Actualités ─── -->
   <section class="home-news-section">
     <div class="wrap">
       <div class="home-section-head">
         <h2 class="home-section-title">Nos Actus</h2>
-        <a href="/actualites" class="home-link-more">Voir toutes les actualités →</a>
+        <a href="/actualites" class="home-link-more"
+          >Voir toutes les actualités →</a
+        >
       </div>
 
-      {dernieresActus.length === 0 ? (
-        <p class="home-empty-state">Aucun article publié pour le moment. Repassez bientôt !</p>
-      ) : (
-        <div class="home-news-grid">
-          {dernieresActus.map((actu) => (
-            <article class="home-news-card">
-              <div class="home-card-meta">
-                <span class="home-card-tag">{actu.data.tag}</span>
-                <time datetime={actu.data.date.toISOString()}>
-                  {actu.data.date.toLocaleDateString('fr-FR', {
-                    day: 'numeric',
-                    month: 'short',
-                    year: 'numeric',
-                  })}
-                </time>
-              </div>
-              <h3 class="home-card-title">{actu.data.title}</h3>
-              <p class="home-card-desc">{actu.data.description}</p>
-              <a href={`/actualites/${actu.id}`} class="home-card-link">
-                Lire l'article <span class="sr-only">au sujet de {actu.data.title}</span>
-              </a>
-            </article>
-          ))}
-        </div>
-      )}
+      {
+        dernieresActus.length === 0 ? (
+          <p class="home-empty-state">
+            Aucun article publié pour le moment. Repassez bientôt !
+          </p>
+        ) : (
+          <div class="home-news-grid">
+            {dernieresActus.map((actu) => (
+              <article class="home-news-card">
+                {/* Image de couverture si définie */}
+                {actu.data.image && (
+                  <img
+                    src={actu.data.image}
+                    alt=""
+                    class="home-card-image"
+                    aria-hidden="true"
+                    width="400"
+                    height="225"
+                    loading="lazy"
+                    decoding="async"
+                  />
+                )}
+                <div class="home-card-body">
+                  <div class="home-card-meta">
+                    <span class="home-card-tag">{actu.data.tag}</span>
+                    <time datetime={actu.data.date.toISOString()}>
+                      {actu.data.date.toLocaleDateString("fr-FR", {
+                        day: "numeric",
+                        month: "short",
+                        year: "numeric",
+                      })}
+                    </time>
+                  </div>
+                  <h3 class="home-card-title">{actu.data.title}</h3>
+                  <p class="home-card-desc">{actu.data.description}</p>
+                  <a href={`/actualites/${actu.id}`} class="home-card-link">
+                    Lire l'article
+                    <span class="sr-only">: {actu.data.title}</span>
+                  </a>
+                </div>
+              </article>
+            ))}
+          </div>
+        )
+      }
     </div>
   </section>
 
@@ -137,9 +181,12 @@ const valeurs = await Promise.all(
       <span class="eyebrow">Rejoignez le mouvement</span>
       <h2 class="home-cta-title">Maecenas ligula enim.</h2>
       <p class="home-cta-text">
-        Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer sodales maximus nibh, nec gravida libero varius at. In sit amet massa sed nisl tempor faucibus.
+        Interdum et malesuada fames ac ante ipsum primis in faucibus. Integer
+        sodales maximus nibh, nec gravida libero varius at.
       </p>
-      <a href="/adherer" class="home-btn home-btn-primary home-btn-lg">Devenir adhérent·e</a>
+      <a href="/adherer" class="home-btn home-btn-primary home-btn-lg"
+        >Devenir adhérent·e</a
+      >
     </div>
   </section>
 </BaseLayout>

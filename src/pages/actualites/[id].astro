@@ -1,28 +1,53 @@
 ---
 import BaseLayout from '../../layouts/BaseLayout.astro';
-// On importe getCollection pour lister les articles et render pour le contenu Markdown
-import { getCollection, render } from 'astro:content'; 
+import { getCollection, render } from 'astro:content';
 
-// 1. Génération des routes statiques requise par Netlify
+// ─── Génération des routes statiques ──────────────────────────────────────
 export async function getStaticPaths() {
   const actualites = await getCollection('actualites');
-  
   return actualites.map(actu => ({
-    params: { id: actu.id }, // Utilise l'id (nom du fichier .md) pour l'URL
-    props: { actu },         // Passe l'article en propriété à la page
+    params: { id: actu.id },
+    props:  { actu },
   }));
 }
 
-// 2. Récupération des données de l'article actuel
+// ─── Données de l'article ─────────────────────────────────────────────────
 const { actu } = Astro.props;
+const { Content } = await render(actu);
 
-// 3. Extraction du composant Content pour afficher le corps de l'article (Astro 7)
-const { Content } = await render(actu); 
+// ─── Conversion URL YouTube → URL d'embed ─────────────────────────────────
+// Accepte : youtube.com/watch?v=ID  |  youtu.be/ID  |  youtube.com/embed/ID
+function getEmbedUrl(url: string): string | null {
+  try {
+    const u = new URL(url);
+    let id: string | null = null;
+
+    if (u.hostname.includes('youtube.com')) {
+      id = u.searchParams.get('v') ?? u.pathname.split('/').pop() ?? null;
+    } else if (u.hostname === 'youtu.be') {
+      id = u.pathname.slice(1);
+    }
+
+    return id ? `https://www.youtube.com/embed/${id}` : null;
+  } catch {
+    return null;
+  }
+}
+
+const embedUrl = actu.data.video_youtube
+  ? getEmbedUrl(actu.data.video_youtube)
+  : null;
 ---
 
-<BaseLayout title={`${actu.data.title} — Intersection`} description={actu.data.description}>
+<BaseLayout
+  title={actu.data.title}
+  description={actu.data.description}
+  image={actu.data.image}
+  type="article"
+  publishedDate={actu.data.date.toISOString()}
+>
   <article class="wrap article-container">
-    
+
     <header class="article-header">
       <div class="article-meta">
         <span class="eyebrow">{actu.data.tag}</span>
@@ -30,7 +55,7 @@ const { Content } = await render(actu);
           {actu.data.date.toLocaleDateString('fr-FR', {
             day: 'numeric',
             month: 'long',
-            year: 'numeric'
+            year: 'numeric',
           })}
         </time>
       </div>
@@ -39,8 +64,35 @@ const { Content } = await render(actu);
       <div class="divider"></div>
     </header>
 
+    {/* Image de couverture */}
+    {actu.data.image && (
+      <figure class="article-cover">
+        <img
+          src={actu.data.image}
+          alt={`Image de couverture : ${actu.data.title}`}
+          width="760"
+          height="428"
+          loading="eager"
+          decoding="async"
+        />
+      </figure>
+    )}
+
+    {/* Vidéo YouTube embarquée */}
+    {embedUrl && (
+      <div class="article-video">
+        <iframe
+          src={embedUrl}
+          title={`Vidéo YouTube : ${actu.data.title}`}
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+        ></iframe>
+      </div>
+    )}
+
     <div class="prose">
-      <Content /> 
+      <Content />
     </div>
 
     <footer class="article-footer">
@@ -54,7 +106,7 @@ const { Content } = await render(actu);
   .article-container {
     padding-top: var(--space-xl);
     padding-bottom: var(--space-xl);
-    max-width: 760px; /* Un peu plus serré pour le confort de lecture du texte */
+    max-width: 760px;
   }
 
   .article-header {
@@ -90,18 +142,41 @@ const { Content } = await render(actu);
     margin-top: var(--space-md);
   }
 
-  /* Style du contenu Markdown */
+  /* ─── Image de couverture ─── */
+  .article-cover {
+    margin-bottom: var(--space-lg);
+    border: 1px solid var(--line);
+  }
+  .article-cover img {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  /* ─── Vidéo YouTube ─── */
+  /* Ratio 16:9 responsive sans JS */
+  .article-video {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    margin-bottom: var(--space-lg);
+    background: var(--ink);
+  }
+  .article-video iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* ─── Prose (contenu Markdown) ─── */
   .prose {
     font-size: 18px;
     line-height: 1.75;
     color: var(--ink);
   }
-
-  /* On cible les éléments HTML générés par le Markdown */
-  .prose :global(p) {
-    margin-bottom: var(--space-sm);
-  }
-
+  .prose :global(p)       { margin-bottom: var(--space-sm); }
   .prose :global(h2) {
     font-family: var(--font-display);
     font-size: 1.8rem;
@@ -109,29 +184,38 @@ const { Content } = await render(actu);
     margin-top: var(--space-lg);
     margin-bottom: var(--space-xs);
   }
-
   .prose :global(h3) {
     font-size: 1.4rem;
     font-weight: 600;
     margin-top: var(--space-md);
     margin-bottom: var(--space-xs);
   }
-
-  .prose :global(ul) {
-    margin-left: var(--space-md);
-    margin-bottom: var(--space-sm);
+  .prose :global(ul),
+  .prose :global(ol)      { margin-left: var(--space-md); margin-bottom: var(--space-sm); }
+  .prose :global(li)      { margin-bottom: 4px; }
+  .prose :global(a)       { color: var(--red); text-underline-offset: 3px; }
+  .prose :global(a:hover) { color: var(--red-dark); }
+  .prose :global(blockquote) {
+    border-left: 3px solid var(--red);
+    padding-left: var(--space-md);
+    color: var(--text-muted);
+    font-style: italic;
+    margin: var(--space-md) 0;
+  }
+  .prose :global(code) {
+    font-family: var(--font-mono);
+    font-size: 0.9em;
+    background: var(--paper-soft);
+    padding: 2px 6px;
+    border-radius: 2px;
   }
 
-  .prose :global(li) {
-    margin-bottom: 4px;
-  }
-
+  /* ─── Footer ─── */
   .article-footer {
     margin-top: var(--space-xl);
     padding-top: var(--space-md);
     border-top: 1px solid var(--line);
   }
-
   .back-link {
     font-family: var(--font-mono);
     font-size: 14px;
@@ -139,7 +223,6 @@ const { Content } = await render(actu);
     color: var(--red);
     font-weight: 500;
   }
-
   .back-link:hover {
     text-decoration: underline;
     color: var(--red-dark);
