@@ -2,18 +2,20 @@
 hero:
   eyebrow: Association loi 1901
   titre: L'action par la base<br /><em>Sans chef, sans compromis</em>.
-  description: L'Intersection rassemble celles et ceux qui pensent que la
-    politique se construit à plusieurs; par le débat, le vote, et l'action de
-    terrain, pas par le sommet de la hiérarchie.
+  description: L'intersection est un mouvement horizontal, antifasciste et
+    écologique. Nous refusons les logiques de carrière et la politique spectacle
+    pour reprendre le contrôle de nos vies par des actions locales et
+    démocratiques.
   btn1_texte: Qui sommes-nous ?
   btn1_lien: /qui-sommes-nous
   btn2_texte: Nous rejoindre
   btn2_lien: /adherer
 cta:
   eyebrow: Rejoignez le mouvement
-  titre: Votre voix compte autant que les autres
-  texte: L'adhésion donne accès aux votes internes, aux groupes de travail et à
-    l'antenne locale la plus proche de chez vous.
+  titre: Pas besoin de carte de crédit pour agir
+  texte: Chez nous, l'argent n'achète aucun pouvoir et l'adhésion est totalement
+    gratuite. Participez à deux actions locales pour devenir membre actif et
+    prendre part à toutes les décisions de l'association.
   btn_texte: Devenir adhérent·e
   btn_lien: /adherer
 ---
