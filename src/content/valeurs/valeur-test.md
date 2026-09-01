@@ -1,6 +1,6 @@
 ---
 titre: Antifascistes & Alliés des luttes
-icone: /images/screenshot_26_02_04_01_03_13.jpg
+icone: /images/pexels-ivan-s-9643250.jpg
 resume: Opposés sans concession à l'extrême droite, nous combattons le sexisme,
   le racisme...
 ordre: 1
