@@ -1,7 +1,8 @@
 ---
-titre: Valeur test 3
-icone: /images/gris-2d-adventure-games.jpeg
-resume: Résumé test 3
+titre: Horizontalité & Gratuité
+icone: /images/photo-1703566757295-1a72f47a94de.avif
+resume: Pas de hiérarchie, pas de figure tutélaire, pas de cotisation
+  obligatoire. Nos décisions...
 ordre: 3
 ---
-Description test 3
+Pas de hiérarchie, pas de figure tutélaire, pas de cotisation obligatoire. Nos décisions se prennent en assemblée générale au consensus et au vote, en totale transparence financière.
