@@ -1,7 +1,7 @@
 ---
 hero:
-  eyebrow: Texte test
-  titre: Titre.<br />principal <em>test</em>.
+  eyebrow: Association loi 1901
+  titre: Décider ensemble.<br />Agir <em>collectivement</em>.
   description: Texte d'introduction test
   btn1_texte: Qui sommes-nous ?
   btn1_lien: /qui-sommes-nous
