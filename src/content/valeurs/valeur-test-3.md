@@ -1,6 +1,6 @@
 ---
 titre: Horizontalité & Gratuité
-icone: /images/gris-2d-adventure-games.jpeg
+icone: /images/photo-1703566757295-1a72f47a94de.avif
 resume: Pas de hiérarchie, pas de figure tutélaire, pas de cotisation
   obligatoire. Nos décisions...
 ordre: 3
