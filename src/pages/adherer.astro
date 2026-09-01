@@ -1,4 +1,139 @@
 ---
-import ConstructionLayout from "../layouts/ConstructionLayout.astro"
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getEntry } from "astro:content";
+
+// Récupération des données du fichier src/content/pages/adherer.md
+const pageAdherer = await getEntry("pages", "adherer");
+
+if (!pageAdherer) {
+  throw new Error("Le fichier src/content/pages/adherer.md est introuvable.");
+}
+
+const {
+  eyebrow = "Rejoignez le mouvement",
+  titre,
+  description,
+  qr_code,
+  qr_caption = "Scannez ce code avec votre téléphone",
+} = pageAdherer.data;
 ---
-<ConstructionLayout></ConstructionLayout>
+
+<BaseLayout title={titre} description={description}>
+  <section class="adherer-hero">
+    <div class="wrap adherer-container">
+      <!-- Surtitre personnalisable -->
+      {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+
+      <!-- Titre principal -->
+      <h1 class="adherer-title">{titre}</h1>
+
+      <!-- Description -->
+      <p class="adherer-lead">{description}</p>
+
+      {
+        qr_code && (
+          <div class="adherer-card">
+            <div class="adherer-qr-wrap">
+              <img
+                src={qr_code}
+                alt={`QR Code pour adhérer : ${titre}`}
+                class="adherer-qr-image"
+                width="280"
+                height="280"
+                loading="eager"
+                decoding="async"
+              />
+            </div>
+            <!-- Légende sous le QR code personnalisable -->
+            {qr_caption && (
+              <span class="adherer-qr-caption">{qr_caption}</span>
+            )}
+          </div>
+        )
+      }
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* ════════════════════════════════════════════════════════════
+     PAGE ADHÉRER — Inspiré de home.css
+     ════════════════════════════════════════════════════════════ */
+
+  .adherer-hero {
+    padding: var(--space-xl) 14px;
+    min-height: calc(100vh - 200px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .adherer-container {
+    max-width: 680px;
+    margin: 0 auto;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .adherer-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5.5vw, 4.2rem);
+    line-height: 0.98;
+    color: var(--ink);
+    text-transform: uppercase;
+    margin: var(--space-xs) 0 var(--space-md) 0;
+    letter-spacing: -0.01em;
+  }
+
+  .adherer-lead {
+    font-size: clamp(1.05rem, 1.6vw, 1.25rem);
+    max-width: 52ch;
+    color: var(--text-muted);
+    line-height: 1.55;
+    margin-bottom: var(--space-lg);
+  }
+
+  /* Support blanc garanti sous le QR Code pour assurer la lisibilité par les appareils photo */
+  .adherer-qr-wrap {
+    background: #ffffff;
+    padding: 16px;
+    border: 1px solid var(--line);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .adherer-qr-image {
+    display: block;
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    /* Rendu net des pixels du QR code */
+    image-rendering: pixelated;
+  }
+
+  .adherer-qr-caption {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin-top: var(--space-sm);
+  }
+
+  /* ─── Responsive ─── */
+  @media (max-width: 768px) {
+    .adherer-hero {
+      padding-top: var(--space-lg);
+      padding-bottom: var(--space-lg);
+    }
+
+    .adherer-card {
+      width: 100%;
+      max-width: 320px;
+      padding: var(--space-sm);
+    }
+  }
+</style>

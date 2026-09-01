@@ -112,11 +112,13 @@ collections:
           - { label: "Image d'en-tête", name: "image_header", widget: "image", required: false }
           - { label: "Notre Histoire / Manifeste", name: "contenu", widget: "markdown" }
 
-      # PAGE ADHÉRER (Nouvelle)
+      # PAGE ADHÉRER
       - name: "adherer"
         label: "Adhérer"
-        file: "src/content/pages/adherer.json"
+        file: "src/content/pages/adherer.md"
         fields:
-          - { label: "Titre", name: "titre", widget: "string", default: "Soutenez notre action" }
-          - { label: "Texte d'explication", name: "description", widget: "markdown", hint: "Expliquez pourquoi adhérer, l'importance des dons, etc." }
-          - { label: "Lien vers la plateforme (ex: HelloAsso, Stripe)", name: "lien_paiement", widget: "string" }
+          - { label: "Surtitre (Eyebrow)", name: "eyebrow", widget: "string", default: "Rejoignez le mouvement" }
+          - { label: "Titre de la page", name: "titre", widget: "string", default: "Soutenez notre action" }
+          - { label: "Texte d'explication", name: "description", widget: "text", hint: "Expliquez la démarche ou donnez les consignes pour scanner." }
+          - { label: "Image du QR Code", name: "qr_code", widget: "image", hint: "Importez l'image du QR code." }
+          - { label: "Légende sous le QR Code", name: "qr_caption", widget: "string", default: "Scannez ce code avec votre téléphone" }
