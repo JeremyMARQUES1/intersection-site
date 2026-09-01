@@ -1,7 +1,7 @@
 ---
 hero:
   eyebrow: Association loi 1901
-  titre: Décider ensemble.<br />Agir <em>collectivement</em>.
+  titre: L'action par la base<br /><em>Sans chef, sans compromis</em>.
   description: L'Intersection rassemble celles et ceux qui pensent que la
     politique se construit à plusieurs; par le débat, le vote, et l'action de
     terrain, pas par le sommet de la hiérarchie.
