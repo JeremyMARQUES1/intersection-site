@@ -54,4 +54,11 @@ const valeurs = defineCollection({
   }),
 });
 
-export const collections = { actualites, membres, valeurs };
+// ─── Pages Statiques (.md) ────────────────────────────────────────────────────
+const pages = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/pages' }),
+  // On utilise z.any() car la page "accueil", "adherer" et "qui-sommes-nous" n'ont pas la même structure de frontmatter
+  schema: z.any(),
+});
+
+export const collections = { actualites, membres, valeurs, pages };

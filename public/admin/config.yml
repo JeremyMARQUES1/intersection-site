@@ -76,14 +76,32 @@ collections:
       # PAGE ACCUEIL
       - name: "accueil"
         label: "Accueil"
-        file: "src/content/pages/accueil.json"
+        file: "src/content/pages/accueil.md" # <-- Changé en .md
         fields:
-          - { label: "Accroche (titre hero)", name: "accroche", widget: "string" }
-          - { label: "Sous-titre hero", name: "sous_titre", widget: "text" }
-          - { label: "Image / Vidéo de fond Hero", name: "media_hero", widget: "image", required: false }
-          - { label: "Bouton d'action - Texte", name: "cta_texte", widget: "string", default: "Rejoindre le mouvement" }
-          - { label: "Bouton d'action - Lien", name: "cta_lien", widget: "string", default: "/adherer" }
-          - { label: "À propos (résumé)", name: "a_propos", widget: "markdown" }
+          - label: "En-tête (Hero)"
+            name: "hero"
+            widget: "object"
+            fields:
+              - { label: "Surtitre (Eyebrow)", name: "eyebrow", widget: "string" }
+              - { label: "Titre principal", name: "titre", widget: "string", hint: "Tu peux utiliser <br> pour sauter une ligne et <em> pour l'italique." }
+              - { label: "Texte d'introduction", name: "description", widget: "text" }
+              - { label: "Bouton Primaire - Texte", name: "btn1_texte", widget: "string" }
+              - { label: "Bouton Primaire - Lien", name: "btn1_lien", widget: "string" }
+              - { label: "Bouton Secondaire - Texte", name: "btn2_texte", widget: "string" }
+              - { label: "Bouton Secondaire - Lien", name: "btn2_lien", widget: "string" }
+          
+          - label: "Bandeau d'Action (Bas de page)"
+            name: "cta"
+            widget: "object"
+            fields:
+              - { label: "Surtitre", name: "eyebrow", widget: "string" }
+              - { label: "Titre", name: "titre", widget: "string" }
+              - { label: "Texte explicatif", name: "texte", widget: "text" }
+              - { label: "Bouton - Texte", name: "btn_texte", widget: "string" }
+              - { label: "Bouton - Lien", name: "btn_lien", widget: "string" }
+          
+          # Le champ body est requis par Decap pour les fichiers .md, même si tu ne l'utilises pas visuellement sur l'accueil
+          - { label: "Contenu masqué (optionnel)", name: "body", widget: "markdown", required: false }
 
       # PAGE QUI SOMMES NOUS
       - name: "qui-sommes-nous"
