@@ -1,7 +1,7 @@
 ---
 hero:
   eyebrow: Association loi 1901
-  titre: L'action par la base<br /><em>Sans chef, sans compromis</em>.
+  titre: Face aux oppressions<br /><em>Unissons nos combats</em>.
   description: L'intersection est un mouvement horizontal, antifasciste et
     écologique. Nous refusons les logiques de carrière et la politique spectacle
     pour reprendre le contrôle de nos vies par des actions locales et
