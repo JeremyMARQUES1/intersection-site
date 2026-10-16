@@ -1,13 +1,11 @@
 ---
 title: Annulation des concerts de Patrick Burel
-description: Revenons sur la question de l'annulation de la tournée Alors
-  Regarde 35 de Patrick Bruel, et notamment son retentissement sur Orléans.
+description: Faisons le bilan de la venue de Patrick Bruel à Orléans en octobre
+  2026, son retentissement et son annulation.
 date: 2026-10-16
 tag: Social
 draft: false
 ---
-Faisons le bilan de la venue de Patrick Bruel à Orléans en octobre 2026.
-
 Au jour où nous publions cet article, Patrick Bruel est l’objet de 32 plaintes pour harcèlement sexuel, agressions sexuelles, viols et tentatives de viol, et pour des faits allant de 1991 à 2019. <a href="https://www.mediapart.fr/journal/france/dossier/l-affaire-patrick-bruel">Les témoignages sont recueillis par Mediapart</a> et vont résonner dans la presse et les médias télévisés, à plus forte raison après le témoignage de Flavie Flament.
 
 Dés la fin du mois de mai 2026, la tournée de Patrick Bruel est annulée par sa production au Canada (<a href="https://lepetitjournal.com/montreal/actualites/patrick-bruel-concerts-annules-quebec-apres-accusations-444062">3 dates à Québec</a> et <a href="https://www.lemonde.fr/societe/article/2026/06/03/affaire-patrick-bruel-le-chanteur-annule-trois-dates-a-montreal-et-met-un-terme-a-sa-tournee-au-canada_6696664_3224.html">3 dates à Montréal</a>) ainsi qu’en Belgique (où une enquête judiciaire est lancée). De même, en France, la participation à des festivals en juin est annulée et <a href="https://www.patrickbruel.com/alors-regarde-35-dates-prevues-entre-juin-et-septembre-2026/">le tout annoncé par 14 Productions, sa boîte de production</a>.
