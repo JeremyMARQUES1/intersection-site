@@ -1,5 +1,5 @@
 ---
-title: Annulation des concerts de Patrick Burel
+title: Annulation des concerts de Patrick Bruel
 description: Faisons le bilan de la venue de Patrick Bruel à Orléans en octobre
   2026, son retentissement et son annulation.
 date: 2026-10-16
